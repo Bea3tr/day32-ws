@@ -1,0 +1,62 @@
+<div class="frame">
+
+<div class="top">
+  <h3 class="pad">ToDo</h3>
+
+  <form [formGroup]="form" (submit)="processForm()">
+    <table class="pad">
+      <tr>
+        <td>Description: </td>
+        <td>
+          <input type="text" formControlName="description">
+        </td>
+      </tr>
+      <tr>
+        <td>Priority: </td>
+        <td>
+          <span>High <input type="radio" value="high" formControlName="priority"></span>
+          <span>Medium <input type="radio" value="med" formControlName="priority"></span>
+          <span>Low <input type="radio" value="low" formControlName="priority"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>Due: </td>
+        <td>
+          <input type="date" formControlName="dueDate">
+          @if (!form.get('dueDate')?.valid) {
+            <span [ngClass]="{ 'error': isPast }">You cannot travel back in time!</span>
+          }
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit" [disabled]="invalid()">Add</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<br>
+
+<div class="bottom">
+  @if (todos.length <= 0) {
+    <h3>Looks like you're free!</h3>
+  } @else {
+    <div class="innerBottom">
+      <h3>Task</h3>
+      @for (todo of todos; let idx = $index; track idx) {
+        <div class="task">
+          <h3 [innerText]="todo.description"></h3>
+          <div class="apart">
+            <span [innerText]="todo.priority"></span>
+            <span [innerText]="todo.dueDate"></span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+</div>
+

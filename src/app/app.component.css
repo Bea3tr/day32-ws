@@ -1,0 +1,39 @@
+.apart {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.error {
+    color: red;
+}
+
+.top {
+    width: 50vw;
+    margin: auto;
+}
+
+.bottom {
+    border: solid 1px darkblue;
+    width: 50vw;
+    margin: auto;
+}
+
+.innerBottom {
+    padding: 10px;
+}
+
+.task {
+    border: solid 1px darkblue;
+    padding: 10px;
+}
+
+.frame {
+    border: solid 1px darkblue;
+    padding: 20px;
+    width: 50vw;
+    margin: auto;
+}
+
+.pad {
+    margin: 10px;
+}
