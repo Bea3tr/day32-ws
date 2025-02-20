@@ -46,15 +46,28 @@
   } @else {
     <div class="innerBottom">
       <h3>Task</h3>
-      @for (todo of todos; let idx = $index; track idx) {
-        <div class="task">
-          <h3 [innerText]="todo.description"></h3>
-          <div class="apart">
-            <span [innerText]="todo.priority"></span>
-            <span [innerText]="todo.dueDate"></span>
-          </div>
-        </div>
-      }
+      <table class="task">
+        @for (todo of todos; let idx = $index; track idx) {
+          <tr>
+            <td>
+              <h3 [innerText]="todo.description"></h3>
+              <div class="apart">
+                <span [innerText]="todo.priority"></span>
+                <span [innerText]="todo.dueDate"></span>
+              </div>
+            </td>
+            <td class="align">
+              <div>
+                <button type="button" (click)="deleteTask(idx)">X</button>
+              </div>
+              <div>
+                <button type="button" (click)="taskCompleted(idx)">Completed</button>
+              </div>
+              
+            </td>
+          </tr>
+        }
+      </table>
     </div>
   }
 </div>

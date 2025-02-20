@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   private fb = inject(FormBuilder)
   protected form!: FormGroup
   protected todos: Task[] = []
+  protected completed: Task[] = []
 
   isPast = (ctrl: AbstractControl) => {
     if(new Date(ctrl.value) < new Date())
@@ -22,6 +23,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
       this.form = this.createForm()
+  }
+
+  protected taskCompleted(idx: number) {
+    this.completed.push(this.todos[idx])
+    this.todos.splice(idx, 1)
+    console.info('>>> Completed: ', this.completed)
+  }
+
+  protected deleteTask(idx: number) {
+    console.info('>>> Deleted task: ', this.todos[idx])
+    this.todos.splice(idx, 1)
   }
 
   protected invalid(): boolean {

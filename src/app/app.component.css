@@ -25,6 +25,8 @@
 .task {
     border: solid 1px darkblue;
     padding: 10px;
+    width: 45vw;
+    margin: auto;
 }
 
 .frame {
@@ -35,5 +37,10 @@
 }
 
 .pad {
+    margin: 10px;
+}
+
+.align button {
+    text-align: center;
     margin: 10px;
 }
