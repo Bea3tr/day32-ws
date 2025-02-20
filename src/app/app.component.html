@@ -4,37 +4,49 @@
   <h3 class="pad">ToDo</h3>
 
   <form [formGroup]="form" (submit)="processForm()">
-    <table class="pad">
+    <table>
       <tr>
-        <td>Description: </td>
         <td>
-          <input type="text" formControlName="description">
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input type="text" formControlName="description" matInput>
+          </mat-form-field>
         </td>
       </tr>
       <tr>
-        <td>Priority: </td>
+        <td>Priority</td>
+      </tr>
+      <tr>
         <td>
-          <span>High <input type="radio" value="high" formControlName="priority"></span>
-          <span>Medium <input type="radio" value="med" formControlName="priority"></span>
-          <span>Low <input type="radio" value="low" formControlName="priority"></span>
+          <mat-radio-group formControlName="priority">
+            <mat-radio-button value="high">High</mat-radio-button>
+            <mat-radio-button value="med">Medium</mat-radio-button>
+            <mat-radio-button value="low">Low</mat-radio-button>
+          </mat-radio-group>
         </td>
       </tr>
       <tr>
-        <td>Due: </td>
         <td>
-          <input type="date" formControlName="dueDate">
-          @if (!form.get('dueDate')?.valid) {
-            <span [ngClass]="{ 'error': isPast }">You cannot travel back in time!</span>
-          }
+          <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dueDate">
+            <mat-hint>
+              @if (!form.get('dueDate')?.valid) {
+              <span [ngClass]="{ 'error': isPast }">You cannot travel back in time!</span>
+              }
+            </mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          
         </td>
       </tr>
       <tr>
-        <td></td>
         <td>
-          <button type="submit" [disabled]="invalid()">Add</button>
+          <button mat-flat-button [disabled]="invalid()">Add</button>
         </td>
       </tr>
-    </table>
+    </table>   
   </form>
 </div>
 
@@ -46,8 +58,28 @@
   } @else {
     <div class="innerBottom">
       <h3>Task</h3>
-      <table class="task">
-        @for (todo of todos; let idx = $index; track idx) {
+      <table mat-table [dataSource]="todos" class="mat-elevation-z8">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Task </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef> Priority </th>
+          <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef> Due Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
+        </ng-container>
+      
+      
+        <tr mat-header-row *matHeaderRowDef="['description', 'priority', 'dueDate']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['description', 'priority', 'dueDate'];"></tr>
+        <!-- @for (todo of todos; let idx = $index; track idx) {
           <tr>
             <td>
               <h3 [innerText]="todo.description"></h3>
@@ -63,10 +95,9 @@
               <div>
                 <button type="button" (click)="taskCompleted(idx)">Completed</button>
               </div>
-              
             </td>
           </tr>
-        }
+        } -->
       </table>
     </div>
   }
